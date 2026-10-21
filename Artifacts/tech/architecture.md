@@ -64,20 +64,20 @@ erDiagram
 
 | موجودیت | کلید/قید مهم | رفتار |
 |---|---|---|
-| schema_versions | version | نصب نسخهٔ ۱ را مشخص می‌کند؛ موتور migration عمومی نیست |
+| schema_versions | version | نصب نسخهٔ ۱ را مشخص می‌کند؛ مهاجرت‌های تکمیلی مانند کانگورو به‌صورت خودکار اعمال می‌شوند |
 | learners | id | نسخهٔ فعلی فقط id=1 را نصب و استفاده می‌کند |
-| subjects/chapters/topics | شناسه‌های catalog و position | ترتیب و سرفصل اولیه |
-| resources | UNIQUE(subject_id, resource_key) | منبع متعلق به درس، archived حفظ سابقه |
-| resource_topics | UNIQUE(resource_id, topic_key) | کپی موضوع catalog یا موضوع اختصاصی |
-| activities | FK resource_topic_id و learner_id | تاریخ انجام، note، kind، completed و deleted_at؛ حذف عمومی عرضه نشده |
-| assignments | learner، subject، due_date و completed_at | تکلیف مستقل از پیشرفت؛ archived در مدل داده |
-| extra_studies | entry_date و reference_text | تاریخ در ویرایش ثابت |
-| challenges | subject_id اختیاری | null معادل روزمره؛ تاریخ در ویرایش ثابت |
+| subjects/chapters/topics | شناسه‌های catalog و position | ترتیب و سرفصل اولیه در ۷ درس (شامل ریاضی کانگورو) |
+| resources | UNIQUE(subject_id, resource_key) | منبع متعلق به درس؛ امکان ویرایش نام و سرفصل‌ها؛ archived حفظ سابقه |
+| resource_topics | UNIQUE(resource_id, topic_key) | کپی موضوع catalog یا موضوع اختصاصی؛ قابل ویرایش و جایگزینی در منابع سفارشی |
+| activities | FK resource_topic_id و learner_id | تاریخ انجام، note، kind، completed (پیش‌فرض ۱)؛ حذف فعالیت یا بازگرداندن وضعیت درس |
+| assignments | learner، subject، due_date و completed_at | تکلیف مستقل از پیشرفت؛ امکان ویرایش و حذف توسط والد |
+| extra_studies | entry_date و reference_text | تاریخ در ویرایش ثابت؛ دکمهٔ فراخوان برجسته در بالای همهٔ صفحات |
+| challenges | subject_id اختیاری | null معادل روزمره؛ تاریخ در ویرایش ثابت؛ امکان ویرایش و حذف توسط کودک |
 | login_attempts | ip_key | محدودیت تلاش ورود؛ جزو بکاپ یادگیری نیست |
 
 پیشرفت جدول جدا ندارد؛ از فعالیت‌های حذف‌نشدهٔ کامل، کلید متمایز `(subject,source,topic)` استخراج می‌شود. این انتخاب از drift میان فعالیت و شمارنده جلوگیری می‌کند، ولی همهٔ state از DB خوانده می‌شود و با افزایش رکورد هزینه دارد. صفحه‌بندی سروری و شاخص کارایی در نسخهٔ حاضر تعریف نشده‌اند.
 
-`resource_topics` هنگام ایجاد منبع کپی می‌شود؛ تغییر آیندهٔ catalog منابع موجود را خودکار همگام نمی‌کند. بکاپ ۱۱ جدول دامنه را طبق `Backup::TABLES` می‌گیرد؛ نشست‌ها و login_attempts در آن نیستند. DB schema مجموعاً ۱۲ جدول دارد.
+`resource_topics` هنگام ایجاد منبع کپی می‌شود؛ در منابع سفارشی ویرایش سرفصل‌ها توسط والد مقدور است. بکاپ ۱۱ جدول دامنه را طبق `Backup::TABLES` می‌گیرد؛ نشست‌ها و login_attempts در آن نیستند. DB schema مجموعاً ۱۲ جدول دارد.
 
 ## قرارداد API v1
 
@@ -85,17 +85,21 @@ erDiagram
 
 | مسیر / روش | بخش | ورودی اصلی | نتیجه |
 |---|---|---|---|
-| GET /state | هر دو | ندارد | state شامل catalog، resources، logs، tasks، extras، challenges، completions، ranges و backupWarning |
+| GET /state | هر دو | ندارد | state شامل catalog (۷ درس)، resources، logs، tasks، extras، challenges، completions، ranges (شامل current_week) و backupWarning |
 | POST /context | هر دو | role=child یا parent | state بخش تازه |
-| POST /activities | child | subject, source, topic, date, note?, complete?, kind?, task? | 201 و id |
+| POST /activities | child | subject, source, topic, date, note?, complete?, kind?, task? | 201 و id (تکمیل پیش‌فرض فعال) |
 | PUT /activities/{id} | child | همان ورودی | 200 و id |
+| DELETE /activities/{id} | child | ندارد (شناسه در مسیر) | 200 و ok (حذف فعالیت و بازگشت وضعیت موضوع) |
 | POST/PUT /assignments[/{id}] | parent | subject, title, description?, due | 201/200 و id |
+| DELETE /assignments/{id} | parent | ندارد (شناسه در مسیر) | 200 و ok (حذف تکلیف) |
 | POST /assignments/{id}/complete | child | complete | 200 و ok |
 | POST/PUT /extra-studies[/{id}] | child | subject, title, report, date, reference? | 201/200 و id؛ تاریخ ویرایش نادیده گرفته می‌شود |
 | POST/PUT /challenges[/{id}] | child | subject یا general، title, report, date | 201/200 و id؛ تاریخ اصلی ثابت |
+| DELETE /challenges/{id} | child | ندارد (شناسه در مسیر) | 200 و ok (حذف چالش) |
 | POST /resources | parent | subject, title, shared؛ اگر false، topics چندخطی | 201 و id عددی DB |
+| PUT /resources/{id} | parent | title, topics چندخطی | 200 و ok (ویرایش نام و سرفصل‌های منبع سفارشی) |
 | POST /resources/{id}/archive | parent | شناسهٔ DB در مسیر | 200 و ok |
-| GET /reports?period=week یا month | parent | بازه | range و رکوردهای فیلترشده |
+| GET /reports?period=current_week یا week یا month | parent | بازه | range و رکوردهای فیلترشده (هفتهٔ جاری / هفتهٔ قبل / ماه قبل) |
 | GET /backups | parent | ندارد | files با name, bytes, date |
 | GET /backups/{name} | parent | نام استاندارد kashf-YYYY-MM-DD.json.gz | فایل application/gzip |
 
