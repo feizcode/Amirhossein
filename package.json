@@ -1,0 +1,8 @@
+{
+  "name": "kashf-learning",
+  "private": true,
+  "type": "module",
+  "scripts": {"build": "vite build", "test:e2e": "node tests/browser.cjs", "package": "node bin/package.cjs"},
+  "dependencies": {"@alpinejs/csp": "^3.14.0", "lucide": "^0.468.0", "@fontsource/vazirmatn": "^5.1.0"},
+  "devDependencies": {"vite": "^6.0.0"}
+}

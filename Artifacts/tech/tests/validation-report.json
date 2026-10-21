@@ -1,0 +1,347 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-20T15:30:14.279Z",
+  "scope": "Only this artifact set; no application test rerun or production verification",
+  "status": "PASS",
+  "files": 70,
+  "total_bytes": 1854305,
+  "local_links_checked": 197,
+  "broken_links": [],
+  "invalid_unicode_files": [],
+  "requirements_covered_in_matrix": true,
+  "all_eleven_backlog_ids_present": true,
+  "release_archive_hashes_match_manifest": true,
+  "synthetic_capture": {
+    "screens": 12,
+    "requests": 34,
+    "browser_errors": [],
+    "existing_database_accessed": false,
+    "all_network_requests_intercepted": true,
+    "portable_css_font_urls_rebased": true,
+    "no_horizontal_overflow": true,
+    "computed_primary": "#6450cf"
+  },
+  "render_checks": [
+    {
+      "file": "index.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "index.html",
+      "width": 390,
+      "scrollWidth": 390,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "index.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "product/wireframes/index.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "product/wireframes/index.html",
+      "width": 390,
+      "scrollWidth": 390,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "product/wireframes/index.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/design-system/components.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/design-system/components.html",
+      "width": 390,
+      "scrollWidth": 390,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/design-system/components.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/index.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/index.html",
+      "width": 390,
+      "scrollWidth": 390,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/index.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/screens/login.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/screens/diary-empty.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/screens/diary.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/screens/lessons.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/screens/subject.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/screens/activity-form.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/screens/parent.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/screens/reports.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/screens/backups.html",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/screens/diary-mobile.html",
+      "width": 390,
+      "scrollWidth": 390,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/screens/form-mobile.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "file": "design/app-web-design/screens/reports-mobile.html",
+      "width": 390,
+      "scrollWidth": 390,
+      "rtl": true,
+      "images": [],
+      "fonts": true,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-01",
+      "mode": "desktop",
+      "width": 1036,
+      "scrollWidth": 1036,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-01",
+      "mode": "mobile",
+      "width": 386,
+      "scrollWidth": 386,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-02",
+      "mode": "desktop",
+      "width": 1036,
+      "scrollWidth": 1036,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-02",
+      "mode": "mobile",
+      "width": 386,
+      "scrollWidth": 386,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-03",
+      "mode": "desktop",
+      "width": 1036,
+      "scrollWidth": 1036,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-03",
+      "mode": "mobile",
+      "width": 386,
+      "scrollWidth": 386,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-04",
+      "mode": "desktop",
+      "width": 1036,
+      "scrollWidth": 1036,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-04",
+      "mode": "mobile",
+      "width": 386,
+      "scrollWidth": 386,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-05",
+      "mode": "desktop",
+      "width": 1036,
+      "scrollWidth": 1036,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-05",
+      "mode": "mobile",
+      "width": 386,
+      "scrollWidth": 386,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-06",
+      "mode": "desktop",
+      "width": 1036,
+      "scrollWidth": 1036,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-06",
+      "mode": "mobile",
+      "width": 386,
+      "scrollWidth": 386,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-07",
+      "mode": "desktop",
+      "width": 1036,
+      "scrollWidth": 1036,
+      "pass": true
+    },
+    {
+      "wireframe": "WF-07",
+      "mode": "mobile",
+      "width": 386,
+      "scrollWidth": 386,
+      "pass": true
+    }
+  ],
+  "browser_errors": [],
+  "external_requests": [],
+  "visual_review": {
+    "status": "PASS",
+    "reviewed": "Final 12 UI captures, catalog desktop/mobile, component sheet and wireframe form reviewed after font URL correction",
+    "date": "2026-10-20"
+  }
+}

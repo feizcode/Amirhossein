@@ -1,0 +1,52 @@
+{% extends 'base.twig' %}
+{% block head %}<meta name="csrf-token" content="{{ csrf }}">{% endblock %}
+{% block body %}
+<div id="kashf" x-data="journal">
+  <header class="m-top">
+    <div class="m-brand-area">
+      <div class="m-logo">
+        <span class="m-logomark" aria-hidden="true">ک</span>
+        <div class="m-logo-text">
+          <span class="m-logo-title">کشف</span>
+          <span class="m-small">دفتر یادگیری امیرحسین</span>
+        </div>
+      </div>
+      <div class="m-streak-badge" data-streak-badge title="استریک پیوستگی یادگیری" aria-label="استریک ۵ روز">
+        <i data-lucide="flame" class="m-streak-flame" aria-hidden="true"></i>
+        <span class="m-streak-val" data-streak-count>۵ روز</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button type="button" class="m-theme-toggle" data-theme-toggle aria-label="تغییر حالت شب و روز">
+        <i data-lucide="moon" class="dark-icon" aria-hidden="true"></i>
+        <i data-lucide="sun" class="light-icon" aria-hidden="true"></i>
+      </button>
+      <div class="m-switch" role="group" aria-label="انتخاب بخش">
+        <button type="button" data-role="child" aria-pressed="true">امیرحسین</button>
+        <button type="button" data-role="parent" aria-pressed="false">والدین</button>
+      </div>
+      <form method="post" action="/logout">
+        <input type="hidden" name="_csrf" value="{{ csrf }}">
+        <button class="logout" type="submit" aria-label="خروج">خروج</button>
+      </form>
+    </div>
+  </header>
+  <div class="m-shell">
+    <aside class="m-rail">
+      <div class="m-compose">
+        <button type="button" class="m-fab" data-compose aria-label="ثبت فعالیت">+</button>
+        <span class="m-compose-label" data-compose-label>ثبت فعالیت</span>
+      </div>
+      <nav class="m-nav" aria-label="بخش‌های کشف" data-nav></nav>
+    </aside>
+    <main class="m-main">
+      <div class="m-notice" x-show="busy" role="status">در حال خواندن دفتر…</div>
+      <div class="m-error" x-show="error" x-text="error" role="alert"></div>
+      <div data-notice aria-live="polite"></div>
+      <div data-content></div>
+      <footer class="m-footer">کشف · قدم‌های کوچک، یادگیری ماندگار</footer>
+    </main>
+  </div>
+</div>
+<noscript><p class="no-script">برای ثبت فعالیت‌ها، جاوااسکریپت مرورگر را فعال کنید.</p></noscript>
+{% endblock %}

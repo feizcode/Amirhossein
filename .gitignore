@@ -1,0 +1,9 @@
+/vendor/
+/node_modules/
+/work/
+/outputs/
+/storage/*
+!/storage/.gitkeep
+/config/local.php
+/public/assets/build/
+/.env

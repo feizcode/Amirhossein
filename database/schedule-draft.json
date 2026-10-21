@@ -1,0 +1,461 @@
+{
+  "schema_version": 1,
+  "timezone": "Asia/Tehran",
+  "week_starts_on": "saturday",
+  "weekdays": [
+    {
+      "index": 0,
+      "label": "شنبه"
+    },
+    {
+      "index": 1,
+      "label": "یکشنبه"
+    },
+    {
+      "index": 2,
+      "label": "دوشنبه"
+    },
+    {
+      "index": 3,
+      "label": "سه‌شنبه"
+    },
+    {
+      "index": 4,
+      "label": "چهارشنبه"
+    },
+    {
+      "index": 5,
+      "label": "پنجشنبه"
+    },
+    {
+      "index": 6,
+      "label": "جمعه"
+    }
+  ],
+  "reference_week_start": "2026-10-17",
+  "reference_week_is_prototype_only": true,
+  "status": "draft_requires_parent_confirmation",
+  "subjects": {
+    "math": "ریاضی",
+    "social": "مطالعات اجتماعی",
+    "quran": "قرآن",
+    "science": "علوم",
+    "persian": "فارسی",
+    "religion": "هدیه‌های آسمان"
+  },
+  "kinds": {
+    "class": "کلاس",
+    "homework": "وقت تکلیف",
+    "rest": "استراحت و غذا",
+    "personal": "فعالیت شخصی",
+    "meeting": "جلسه و گفتگو"
+  },
+  "weekly_entries": [
+    {
+      "prototype_id": "e1",
+      "weekday": 0,
+      "start": "08:00",
+      "end": "09:00",
+      "title": "ریاضی",
+      "subject_id": "math",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e2",
+      "weekday": 0,
+      "start": "09:00",
+      "end": "10:00",
+      "title": "اجتماعی",
+      "subject_id": "social",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e3",
+      "weekday": 0,
+      "start": "10:00",
+      "end": "11:00",
+      "title": "قرآن",
+      "subject_id": "quran",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e4",
+      "weekday": 0,
+      "start": "11:00",
+      "end": "12:00",
+      "title": "علوم",
+      "subject_id": "science",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e5",
+      "weekday": 1,
+      "start": "08:00",
+      "end": "09:00",
+      "title": "ریاضی",
+      "subject_id": "math",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e6",
+      "weekday": 1,
+      "start": "09:00",
+      "end": "10:00",
+      "title": "فارسی",
+      "subject_id": "persian",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e7",
+      "weekday": 1,
+      "start": "10:00",
+      "end": "11:00",
+      "title": "برنامه‌نویسی",
+      "subject_id": null,
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e8",
+      "weekday": 1,
+      "start": "11:00",
+      "end": "12:00",
+      "title": "نگارش",
+      "subject_id": "persian",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e9",
+      "weekday": 2,
+      "start": "08:00",
+      "end": "09:00",
+      "title": "ریاضی",
+      "subject_id": "math",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e10",
+      "weekday": 2,
+      "start": "09:00",
+      "end": "10:00",
+      "title": "علوم",
+      "subject_id": "science",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e11",
+      "weekday": 2,
+      "start": "10:00",
+      "end": "11:00",
+      "title": "کانگورو",
+      "subject_id": "math",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e12",
+      "weekday": 2,
+      "start": "11:00",
+      "end": "12:00",
+      "title": "فارسی",
+      "subject_id": "persian",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e13",
+      "weekday": 3,
+      "start": "08:00",
+      "end": "09:00",
+      "title": "هدیه",
+      "subject_id": "religion",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e14",
+      "weekday": 3,
+      "start": "09:00",
+      "end": "10:00",
+      "title": "ریاضی",
+      "subject_id": "math",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e15",
+      "weekday": 3,
+      "start": "11:00",
+      "end": "12:00",
+      "title": "فارسی",
+      "subject_id": "persian",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e16",
+      "weekday": 4,
+      "start": "08:00",
+      "end": "09:00",
+      "title": "اجتماعی",
+      "subject_id": "social",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e17",
+      "weekday": 4,
+      "start": "09:00",
+      "end": "10:00",
+      "title": "ریاضی",
+      "subject_id": "math",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e18",
+      "weekday": 4,
+      "start": "10:00",
+      "end": "11:00",
+      "title": "علوم",
+      "subject_id": "science",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e19",
+      "weekday": 4,
+      "start": "11:00",
+      "end": "12:00",
+      "title": "کانگورو",
+      "subject_id": "math",
+      "kind": "class",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e20",
+      "weekday": 0,
+      "start": "12:00",
+      "end": "13:00",
+      "title": "استراحت، نماز و میان‌وعده",
+      "subject_id": null,
+      "kind": "rest",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e21",
+      "weekday": 0,
+      "start": "14:30",
+      "end": "15:00",
+      "title": "ناهار",
+      "subject_id": null,
+      "kind": "rest",
+      "needs_time_confirmation": true
+    },
+    {
+      "prototype_id": "e22",
+      "weekday": 0,
+      "start": "15:00",
+      "end": "18:00",
+      "title": "انجام تکلیف",
+      "subject_id": null,
+      "kind": "homework",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e23",
+      "weekday": 1,
+      "start": "12:00",
+      "end": "13:00",
+      "title": "استراحت، نماز و میان‌وعده",
+      "subject_id": null,
+      "kind": "rest",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e24",
+      "weekday": 1,
+      "start": "14:30",
+      "end": "15:00",
+      "title": "ناهار",
+      "subject_id": null,
+      "kind": "rest",
+      "needs_time_confirmation": true
+    },
+    {
+      "prototype_id": "e25",
+      "weekday": 1,
+      "start": "15:00",
+      "end": "18:00",
+      "title": "انجام تکلیف",
+      "subject_id": null,
+      "kind": "homework",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e26",
+      "weekday": 2,
+      "start": "12:00",
+      "end": "13:00",
+      "title": "استراحت، نماز و میان‌وعده",
+      "subject_id": null,
+      "kind": "rest",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e27",
+      "weekday": 2,
+      "start": "14:30",
+      "end": "15:00",
+      "title": "ناهار",
+      "subject_id": null,
+      "kind": "rest",
+      "needs_time_confirmation": true
+    },
+    {
+      "prototype_id": "e28",
+      "weekday": 2,
+      "start": "15:00",
+      "end": "18:00",
+      "title": "انجام تکلیف",
+      "subject_id": null,
+      "kind": "homework",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e29",
+      "weekday": 3,
+      "start": "12:00",
+      "end": "13:00",
+      "title": "استراحت، نماز و میان‌وعده",
+      "subject_id": null,
+      "kind": "rest",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e30",
+      "weekday": 3,
+      "start": "14:30",
+      "end": "15:00",
+      "title": "ناهار",
+      "subject_id": null,
+      "kind": "rest",
+      "needs_time_confirmation": true
+    },
+    {
+      "prototype_id": "e31",
+      "weekday": 3,
+      "start": "15:00",
+      "end": "18:00",
+      "title": "انجام تکلیف",
+      "subject_id": null,
+      "kind": "homework",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e32",
+      "weekday": 4,
+      "start": "12:00",
+      "end": "13:00",
+      "title": "استراحت، نماز و میان‌وعده",
+      "subject_id": null,
+      "kind": "rest",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e33",
+      "weekday": 4,
+      "start": "14:30",
+      "end": "15:00",
+      "title": "ناهار",
+      "subject_id": null,
+      "kind": "rest",
+      "needs_time_confirmation": true
+    },
+    {
+      "prototype_id": "e34",
+      "weekday": 4,
+      "start": "15:00",
+      "end": "18:00",
+      "title": "انجام تکلیف",
+      "subject_id": null,
+      "kind": "homework",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e35",
+      "weekday": 0,
+      "start": "13:00",
+      "end": "14:30",
+      "title": "کلاس خصوصی",
+      "subject_id": null,
+      "kind": "personal",
+      "needs_time_confirmation": true
+    },
+    {
+      "prototype_id": "e36",
+      "weekday": 3,
+      "start": "13:00",
+      "end": "14:30",
+      "title": "کلاس خصوصی",
+      "subject_id": null,
+      "kind": "personal",
+      "needs_time_confirmation": true
+    },
+    {
+      "prototype_id": "e37",
+      "weekday": 3,
+      "start": "18:00",
+      "end": "20:00",
+      "title": "خوشنویسی",
+      "subject_id": null,
+      "kind": "personal",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e38",
+      "weekday": 5,
+      "start": "09:00",
+      "end": "10:00",
+      "title": "جلسهٔ هفتگی",
+      "subject_id": null,
+      "kind": "meeting",
+      "needs_time_confirmation": false
+    },
+    {
+      "prototype_id": "e39",
+      "weekday": 5,
+      "start": "10:00",
+      "end": "11:00",
+      "title": "گفتگو",
+      "subject_id": null,
+      "kind": "meeting",
+      "needs_time_confirmation": false
+    }
+  ],
+  "day_rules": {
+    "5": {
+      "computer_game_minutes_allowed": 60,
+      "homework_allowed": true
+    },
+    "6": {
+      "computer_game_minutes_allowed": 60,
+      "homework_allowed": true
+    }
+  },
+  "notes": [
+    "The image contains no dates. Reference dates are prototype fixtures only.",
+    "Private-class end and lunch start at 14:30 are approximate readings.",
+    "No assignments or completed activities are included in this seed.",
+    "Kangaroo is a mathematics session title, not a learning resource."
+  ]
+}

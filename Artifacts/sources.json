@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "artifact_set": "Kashf project artifacts",
+  "version": "1.0",
+  "authored_date": "2026-10-20",
+  "timezone": "Asia/Tehran",
+  "language": "fa",
+  "basis": "as-built reconstruction plus explicitly labeled proposals",
+  "primary_reference": {
+    "path": "C:/Users/afeyz/Desktop/TMP/Bozhan _ Aiif/Beyond Prototype Handbook - Building to launch and release.pdf",
+    "title": "Beyond Prototype Handbook: Building to launch and release",
+    "author": "Hamidreza Mojtabavi",
+    "pages": 14,
+    "sha256": "892855e58b68f40055462226d5c7590f5929884f5145206af87efe9427fe1f1b",
+    "visually_reviewed_pages": [
+      8,
+      9,
+      10,
+      11
+    ],
+    "mapping": [
+      {
+        "pages": [
+          5,
+          6,
+          7
+        ],
+        "outputs": [
+          "product/BRD.md",
+          "product/validation-plan.md"
+        ]
+      },
+      {
+        "pages": [
+          8,
+          9
+        ],
+        "outputs": [
+          "README.md",
+          "product/BRD.md",
+          "product/PRD.md",
+          "product/wireframes/index.html"
+        ]
+      },
+      {
+        "pages": [
+          10
+        ],
+        "outputs": [
+          "design/brand-kit/README.md",
+          "design/design-system/README.md",
+          "design/app-web-design/index.html"
+        ]
+      },
+      {
+        "pages": [
+          11
+        ],
+        "outputs": [
+          "tech/architecture.md",
+          "tech/implementation-plan.md",
+          "tech/technical-decisions.md",
+          "tech/tests/test-plan.md",
+          "tech/tasks/backlog.md"
+        ]
+      },
+      {
+        "pages": [
+          13
+        ],
+        "outputs": [
+          "tech/release-runbook.md"
+        ]
+      }
+    ]
+  },
+  "project_sources": [
+    {
+      "path": "README.md",
+      "bytes": 5034,
+      "sha256": "1347ef85966ffa256b0813da2f1160fc5031ecdeca7b3f66e59a96e2f7ab8168"
+    },
+    {
+      "path": "composer.json",
+      "bytes": 576,
+      "sha256": "b2f189458a06021fd2c14ecac3987dda81422f8bce8a8af943c8611e11548362"
+    },
+    {
+      "path": "composer.lock",
+      "bytes": 36112,
+      "sha256": "88361a0e4a8e080f5b56450ac979742d192a5e3d183369c215865992cab719c2"
+    },
+    {
+      "path": "package.json",
+      "bytes": 327,
+      "sha256": "a736416961d9aa96d495a79e723c199d9ed5200d2e96457046d646d74e3667cf"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "bytes": 21989,
+      "sha256": "ef854c494ae9fdc057cea70d3967f65cb355b29902941caab0f3be462889dc33"
+    },
+    {
+      "path": "vite.config.js",
+      "bytes": 218,
+      "sha256": "5b042a4e1a58029c386f95669ba4ae7898843aea3aa574ebfda27b5438f5ee2d"
+    },
+    {
+      "path": "docs/STATUS.fa.md",
+      "bytes": 2103,
+      "sha256": "c4593061ed4fe5bbe2a5341c74453d1275edbe8401b98f09e9546350a633475a"
+    },
+    {
+      "path": "docs/ACCEPTANCE.fa.md",
+      "bytes": 3379,
+      "sha256": "89309942a8942376518d187761aa8b6d8f806749a6be79e0579aefb565f93ac4"
+    },
+    {
+      "path": "docs/DEPLOYMENT.fa.md",
+      "bytes": 8138,
+      "sha256": "1f63f733279343753f94a93367bc0f4e6f2a92aa32a0d4e21fa9b1fae578dc33"
+    },
+    {
+      "path": "docs/RESTORE.fa.md",
+      "bytes": 2908,
+      "sha256": "e7b6c153765feb840699fb2729c35661fe84056fa4981f8d000b3724819ae1a9"
+    },
+    {
+      "path": "docs/THIRD-PARTY.md",
+      "bytes": 561,
+      "sha256": "26e46f3c67c81bba5a24e477b7834c73aeee018726bb05af6b8471cf3dc817c6"
+    },
+    {
+      "path": "outputs/verification.txt",
+      "bytes": 639,
+      "sha256": "ab2f550a553aa6d10e71225f5905f1daa01c1f0d620913d1994351943704b897"
+    },
+    {
+      "path": "outputs/release-manifest.json",
+      "bytes": 734,
+      "sha256": "0156aa8aa5bca8830f03d940e82160fd7e5697b9a84b77a9e8f4ed6e919720e7"
+    },
+    {
+      "path": "src/Application.php",
+      "bytes": 10588,
+      "sha256": "3cf6b1b84da48f95e4728124a3f6ae5c4cae021e9b5513b6a2f008371a3eb9ff"
+    },
+    {
+      "path": "src/Database.php",
+      "bytes": 6263,
+      "sha256": "da735e7cad86b3498ceb6c154091637a6f656a33ec7996ba1ab3f38b7a125838"
+    },
+    {
+      "path": "src/Learning.php",
+      "bytes": 10155,
+      "sha256": "e0c5ce723b8061d47f9977a1a0b2c81aac441b604be484a566f6cf6c2a08d22b"
+    },
+    {
+      "path": "src/Calendar.php",
+      "bytes": 3531,
+      "sha256": "77533e0bae39ac21e60f432d853f44af914bf005d45a7b7db9f3198cd7eaeff4"
+    },
+    {
+      "path": "src/Backup.php",
+      "bytes": 2473,
+      "sha256": "bca95fa99515071b68ae40c301ac6a7952ec5a1db96ef6d7f13df0bbd6821383"
+    },
+    {
+      "path": "templates/base.twig",
+      "bytes": 674,
+      "sha256": "9b2fb6991b150f6576cb4dd90f20ac007b271ffc704998598fdd94c98d0d63bd"
+    },
+    {
+      "path": "templates/login.twig",
+      "bytes": 1026,
+      "sha256": "d8ca9140eb86f85fcd6460b82fba50f6fdeadbdfbd271c3a281157d617d9b78b"
+    },
+    {
+      "path": "templates/app.twig",
+      "bytes": 1637,
+      "sha256": "07e3f1b38b1b7a16a53feff822e71d56d12620991c5aab57b97b4bebb7787c38"
+    },
+    {
+      "path": "resources/app.js",
+      "bytes": 1042,
+      "sha256": "9f583ec05cd0f0247064a6ef1c50f573426b7983c4fc1ba845c9a61379437385"
+    },
+    {
+      "path": "resources/journal.js",
+      "bytes": 26453,
+      "sha256": "5fd4efcdbf7682bb81f149b798cfca13bc340751e862e37c4216c78148a1bf1e"
+    },
+    {
+      "path": "resources/report-view.js",
+      "bytes": 3442,
+      "sha256": "109d98aa155ef6b4abd1ecdf886124c70c0a9366afb0341313b5550654c0d91c"
+    },
+    {
+      "path": "resources/design.css",
+      "bytes": 19286,
+      "sha256": "ce85966d6f3f4618ca45cab73c1e602fab06b4f21132f2bf0916cdece28d8ee6"
+    },
+    {
+      "path": "resources/app.css",
+      "bytes": 3682,
+      "sha256": "2f2f195b58bea458b25a8c07d374eb136cec9f7ff0fc80c47a8c632268785f41"
+    },
+    {
+      "path": "database/catalog.json",
+      "bytes": 18122,
+      "sha256": "1d74d6c4ce2e76da3313621424f45863e62a17887ebc27417fdbe05ed7b7b87f"
+    },
+    {
+      "path": "database/001-initial.sql",
+      "bytes": 137036,
+      "sha256": "d9a58483bca35001fea6485a0f8f0f9cd67a226f19409dcab631b4fb2ecfab75"
+    },
+    {
+      "path": "tests/run.php",
+      "bytes": 5750,
+      "sha256": "30dc02fb0cf337a738f21da95ef7fd4fe300a768bd7b55f09af67d56f3c8fc16"
+    },
+    {
+      "path": "tests/browser.cjs",
+      "bytes": 12699,
+      "sha256": "a5246f9169983f2d6ab5c774c5a616dfc100ddede48f64b59b2991c7171ac7e3"
+    },
+    {
+      "path": "tests/bridge.php",
+      "bytes": 1552,
+      "sha256": "07406bf4c4c890b4ced6b9ca09d7a155bb3695d5fac5ee13867d190ec3053979"
+    },
+    {
+      "path": "public/favicon.svg",
+      "bytes": 240,
+      "sha256": "f6ecc03b14885dbded08a7ec867f453ce4377c72442bc8784345b19c6af94626"
+    },
+    {
+      "path": "public/.htaccess",
+      "bytes": 761,
+      "sha256": "03e828152bc0b2ee4c32e40c429a4fabe7a90184db7fbee902911f3b1e3ca428"
+    },
+    {
+      "path": "bin/package.cjs",
+      "bytes": 3130,
+      "sha256": "255a90e24bf12bf33fd6d25c0911117170df3f1227e797ba260725000e065fe2"
+    },
+    {
+      "path": "public/assets/build/.vite/manifest.json",
+      "bytes": 7299,
+      "sha256": "9016f164c4497396caf4a73f18d71fa7880385db9b17193a873a377a4165e8ea"
+    },
+    {
+      "path": "public/assets/build/assets/app-BANL2YKV.js",
+      "bytes": 111398,
+      "sha256": "e010c0f1c649185d82bb5ffe711ea3c2b38a92a1d817f1f637ea50769f5d545a"
+    },
+    {
+      "path": "public/assets/build/assets/app-BhvUVVIp.css",
+      "bytes": 27832,
+      "sha256": "93189805ee2c30dea06f6322b8f736f4fda1dc32e8a3f6af0bc0cd529060a6c5"
+    }
+  ],
+  "existing_release_archives": [
+    {
+      "file": "outputs/kashf-deploy-2026-10-20T13-04-01-527Z.zip",
+      "expected_sha256": "6b290b9696da7032011c29bfe943c660100d10cb5db7fa266ca2b6d58c864cb1",
+      "actual_sha256": "6b290b9696da7032011c29bfe943c660100d10cb5db7fa266ca2b6d58c864cb1",
+      "bytes": 1006896,
+      "matches": true
+    },
+    {
+      "file": "outputs/kashf-source-2026-10-20T13-04-01-527Z.zip",
+      "expected_sha256": "06b22a1806e423e91b6e949fdbebf03cb599c511c12d7e0c6c8ca4671de91e70",
+      "actual_sha256": "06b22a1806e423e91b6e949fdbebf03cb599c511c12d7e0c6c8ca4671de91e70",
+      "bytes": 88447,
+      "matches": true
+    }
+  ],
+  "claims": {
+    "prior_test_results": "Quoted from existing project files; not rerun",
+    "production_status": "Documented historical observation; no live verification performed",
+    "decisions": "Reconstructed from implementation; initial approver and date unavailable",
+    "business_metrics": "Proposed thresholds; no measured family results",
+    "screens": "Actual current template/build with synthetic state; all requests intercepted locally"
+  },
+  "transformations": [
+    "Copied CSS font URLs rebased from /assets/... to ./... for portable local viewing; original app files unchanged",
+    "Snapshots remove executable app scripts, CSRF tokens and form actions"
+  ],
+  "excluded": [
+    "private configuration",
+    "passwords",
+    "access tokens",
+    "real child records",
+    "production database",
+    "backup contents"
+  ],
+  "limitations": [
+    "Artifacts not included in existing source or deploy ZIPs",
+    "TLS automatic renewal unverified in existing evidence",
+    "Original restore guide PHP 8.4 references differ from composer ^8.2"
+  ]
+}
