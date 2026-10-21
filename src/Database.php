@@ -35,39 +35,47 @@ final class Database
     }
     public static function migrate(PDO $db, array $catalog): void
     {
-        Schedule::migrate($db);
-        if ((int)$db->query("SELECT COUNT(*) FROM subjects WHERE id='kangaroo'")->fetchColumn() === 0) {
-            $db->beginTransaction();
-            try {
+        try {
+            if ((int)$db->query("SELECT COUNT(id) FROM subjects WHERE id='kangaroo'")->fetchColumn() === 0) {
                 $pos = (int)$db->query('SELECT COALESCE(MAX(position), 5) + 1 FROM subjects')->fetchColumn();
-                self::insert($db, 'subjects', ['id'=>'kangaroo', 'name'=>'کانگورو', 'icon'=>'puzzle', 'position'=>$pos]);
-                if (!empty($catalog['kangaroo'])) {
-                    foreach ($catalog['kangaroo'] as $gi => $g) {
-                        self::insert($db, 'chapters', ['id'=>$g['id'], 'subject_id'=>'kangaroo', 'name'=>$g['name'], 'position'=>$gi]);
-                        foreach ($g['topics'] as $ti => $t) {
-                            self::insert($db, 'topics', ['id'=>$t['id'], 'chapter_id'=>$g['id'], 'name'=>$t['name'], 'position'=>$ti]);
+                $db->beginTransaction();
+                try {
+                    self::insert($db, 'subjects', ['id'=>'kangaroo', 'name'=>'کانگورو', 'icon'=>'puzzle', 'position'=>$pos]);
+                    if (!empty($catalog['kangaroo'])) {
+                        foreach ($catalog['kangaroo'] as $gi => $g) {
+                            self::insert($db, 'chapters', ['id'=>$g['id'], 'subject_id'=>'kangaroo', 'name'=>$g['name'], 'position'=>$gi]);
+                            foreach ($g['topics'] as $ti => $t) {
+                                self::insert($db, 'topics', ['id'=>$t['id'], 'chapter_id'=>$g['id'], 'name'=>$t['name'], 'position'=>$ti]);
+                            }
+                        }
+                        $rid = self::insert($db, 'resources', ['subject_id'=>'kangaroo', 'resource_key'=>'school', 'name'=>'کتاب مسابقات کانگورو', 'created_at'=>gmdate('c')]);
+                        $position = 0;
+                        foreach ($catalog['kangaroo'] as $g) {
+                            foreach ($g['topics'] as $t) {
+                                self::insert($db, 'resource_topics', ['resource_id'=>$rid, 'topic_key'=>$t['id'], 'title'=>$t['name'], 'position'=>$position++]);
+                            }
+                        }
+                        $aid = self::insert($db, 'resources', ['subject_id'=>'kangaroo', 'resource_key'=>'ai', 'name'=>'تمرین با هوش مصنوعی', 'created_at'=>gmdate('c')]);
+                        $position = 0;
+                        foreach ($catalog['kangaroo'] as $g) {
+                            foreach ($g['topics'] as $t) {
+                                self::insert($db, 'resource_topics', ['resource_id'=>$aid, 'topic_key'=>$t['id'], 'title'=>$t['name'], 'position'=>$position++]);
+                            }
                         }
                     }
-                    $rid = self::insert($db, 'resources', ['subject_id'=>'kangaroo', 'resource_key'=>'school', 'name'=>'کتاب مسابقات کانگورو', 'created_at'=>gmdate('c')]);
-                    $position = 0;
-                    foreach ($catalog['kangaroo'] as $g) {
-                        foreach ($g['topics'] as $t) {
-                            self::insert($db, 'resource_topics', ['resource_id'=>$rid, 'topic_key'=>$t['id'], 'title'=>$t['name'], 'position'=>$position++]);
-                        }
-                    }
-                    $aid = self::insert($db, 'resources', ['subject_id'=>'kangaroo', 'resource_key'=>'ai', 'name'=>'تمرین با هوش مصنوعی', 'created_at'=>gmdate('c')]);
-                    $position = 0;
-                    foreach ($catalog['kangaroo'] as $g) {
-                        foreach ($g['topics'] as $t) {
-                            self::insert($db, 'resource_topics', ['resource_id'=>$aid, 'topic_key'=>$t['id'], 'title'=>$t['name'], 'position'=>$position++]);
-                        }
-                    }
+                    $db->commit();
+                } catch (\Throwable $e) {
+                    $db->rollBack();
+                    error_log('Kangaroo migration failed: ' . $e->getMessage());
                 }
-                $db->commit();
-            } catch (\Throwable $e) {
-                $db->rollBack();
-                error_log('Kangaroo migration failed: ' . $e->getMessage());
             }
+        } catch (\Throwable $e) {
+            error_log('Kangaroo check failed: ' . $e->getMessage());
+        }
+        try {
+            Schedule::migrate($db);
+        } catch (\Throwable) {
+            // Ignore if DDL is not permitted for this user
         }
     }
     public static function install(PDO $db, array $catalog): void

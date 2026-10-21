@@ -253,7 +253,7 @@ export async function startJournal(root, hooks) {
     const s = state.subject, r = sources(s).some(x => x.id === state.source) ? state.source : sources(s)[0]?.id, n = count(s, r);
     state.source = r;
     return `<button type="button" class="m-back" data-m-page="${isChild() ? 'lessons' : 'overview'}">${icon('arrow-right')} همهٔ درس‌ها</button>`
-      + hero('مسیر یادگیری', esc(name(s)), 'منابع این درس، با پیشرفت مستقل.', isChild() ? `<button type="button" class="m-primary" data-m-open="log">${icon('plus')} ثبت فعالیت</button>` : `<button type="button" class="m-primary" data-m-open="source">${icon('plus')} منبع جدید</button>`)
+      + hero('مسیر یادگیری', esc(name(s)), 'منابع این درس، با پیشرفت مستقل.', isChild() ? `<div class="m-row"><button type="button" class="m-primary" data-m-open="log">${icon('plus')} ثبت فعالیت</button><button type="button" class="m-extra-highlight-btn" data-m-open="extra"><span class="m-extra-emoji">🌱</span><span>کار اضافی این درس</span><span class="m-extra-star">✨</span></button></div>` : `<button type="button" class="m-primary" data-m-open="source">${icon('plus')} منبع جدید</button>`)
       + `<div class="m-subject-tabs" role="group" aria-label="منبع">
         ${sources(s).map(x => `<button type="button" data-m-source="${x.id}" aria-pressed="${x.id === r}">${esc(x.name)}</button>`).join('')}
       </div>
@@ -273,9 +273,10 @@ export async function startJournal(root, hooks) {
 
   function topicRow(t, i, s, r) {
     const done = state.completions.some(x => x.subject === s && x.source === r && x.topic === t.id);
+    const log = done ? state.logs.find(x => x.subject === s && x.source === r && x.topic_id === t.id && x.completed) : null;
     return `<div class="m-topic">
       <span>${esc(t.name)}</span>
-      ${done ? `<span class="m-pill">${icon('check')} انجام شده</span>` : isChild() ? `<button type="button" data-m-topic="${t.id}">ثبت فعالیت ${icon('plus')}</button>` : '<span class="m-small">در مسیر</span>'}
+      ${done ? `<div class="m-row"><span class="m-pill">${icon('check')} انجام شده</span>${isChild() && log ? `<button type="button" class="m-undo-topic-btn" data-delete-log="${log.id}" title="برگرداندن از حالت انجام شده">${icon('rotate-ccw')} انجام نشده</button>` : ''}</div>` : isChild() ? `<button type="button" data-m-topic="${t.id}">ثبت فعالیت ${icon('plus')}</button>` : '<span class="m-small">در مسیر</span>'}
     </div>`;
   }
 
@@ -367,7 +368,7 @@ export async function startJournal(root, hooks) {
       date: edit?.date || TODAY,
       note: log?.note || '',
       kind: log?.kind || 'practice',
-      complete: log?.completed || false,
+      complete: type === 'log' ? true : (log?.completed || false),
       title: editRes ? editRes.name : (edit?.title || ''),
       report: edit?.report || '',
       reference: extra?.reference || '',
@@ -397,8 +398,7 @@ export async function startJournal(root, hooks) {
     if (f.type === 'log') {
       content += field('موضوع', `<select name="topic">${sourceTopics(f.subject, f.source).map(t => `<option value="${esc(t.id)}" ${t.id === f.topic ? 'selected' : ''}>${esc(t.name)}</option>`).join('')}</select>`)
         + day('date', f.date)
-        + field('یادداشت؛ اختیاری', `<textarea name="note" maxlength="1600" placeholder="اگر دوست داشتی دربارهٔ کارت بنویس…">${esc(f.note)}</textarea>`)
-        + `<label class="m-check"><input type="checkbox" name="complete" ${f.complete ? 'checked' : ''}>${task ? 'تکلیف را کامل انجام دادم' : 'این بخش از منبع را کامل کردم'}</label>`;
+        + field('یادداشت؛ اختیاری', `<textarea name="note" maxlength="1600" placeholder="اگر دوست داشتی دربارهٔ کارت بنویس…">${esc(f.note)}</textarea>`);
     } else if (f.type === 'source') {
       content += field('نام منبع', `<input name="title" value="${esc(f.title)}" maxlength="190" required>`)
         + `<label class="m-check"><input name="shared" type="checkbox" ${f.shared ? 'checked' : ''}>سرفصل‌های کتاب مدرسه را داشته باشد</label>`
@@ -439,6 +439,7 @@ export async function startJournal(root, hooks) {
     for (const key of ['complete', 'shared']) {
       if (el.elements[key]) form[key] = el.elements[key].checked;
     }
+    if (form.type === 'log') form.complete = true;
   }
 
   async function submitForm(el) {
@@ -502,6 +503,8 @@ export async function startJournal(root, hooks) {
     if (streakCountEl) streakCountEl.textContent = `${fa(streak)} روز`;
     const streakBadge = root.querySelector('[data-streak-badge]');
     if (streakBadge) streakBadge.style.display = isChild() ? 'inline-flex' : 'none';
+    const extraTopBtn = root.querySelector('[data-extra-top-btn]');
+    if (extraTopBtn) extraTopBtn.style.display = isChild() ? 'inline-flex' : 'none';
 
     window.lucide?.createIcons({attrs: {width: 20, height: 20}});
   }

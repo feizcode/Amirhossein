@@ -35,7 +35,7 @@ final class Learning
         $rt=$this->one('SELECT rt.id,r.archived FROM resource_topics rt JOIN resources r ON r.id=rt.resource_id WHERE r.subject_id=? AND r.resource_key=? AND rt.topic_key=?',[$s,$source,$topic]);
         if($rt['archived'])throw new InvalidArgumentException('این منبع بایگانی شده است.');
         $kind=(string)($d['kind']??'practice');if(!in_array($kind,['practice','reading','review'],true))throw new InvalidArgumentException('نوع فعالیت معتبر نیست.');
-        $row=['resource_topic_id'=>(int)$rt['id'],'activity_date'=>Calendar::parse((string)($d['date']??'')),'kind'=>$kind,'note'=>$this->text($d,'note',1600,false),'completed'=>!empty($d['complete'])?1:0,'updated_at'=>gmdate('c')];
+        $row=['resource_topic_id'=>(int)$rt['id'],'activity_date'=>Calendar::parse((string)($d['date']??'')),'kind'=>$kind,'note'=>$this->text($d,'note',1600,false),'completed'=>(isset($d['complete'])&&empty($d['complete']))?0:1,'updated_at'=>gmdate('c')];
         $taskId=isset($d['task'])&&$d['task']!==''?(int)$d['task']:null;
         $this->db->beginTransaction();try{if($taskId){$task=$this->one('SELECT subject_id FROM assignments WHERE id=? AND archived=0',[$taskId]);if($task['subject_id']!==$s)throw new InvalidArgumentException('درس تکلیف با فعالیت یکسان نیست.');if(!empty($d['complete']))$this->db->prepare('UPDATE assignments SET completed_at=?,updated_at=? WHERE id=?')->execute([gmdate('c'),gmdate('c'),$taskId]);$row['completed']=0;}
             if($id){$this->one('SELECT id FROM activities WHERE id=? AND deleted_at IS NULL',[$id]);$this->update('activities',$id,$row);}else{$id=Database::insert($this->db,'activities',$row+['created_at'=>gmdate('c')]);}$this->db->commit();return$id;
