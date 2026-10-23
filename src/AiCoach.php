@@ -315,11 +315,23 @@ final class AiCoach
     {
         // Configuration is private/trusted, but still refuse names resolving to private networks.
         $host = trim((string)parse_url($this->config['endpoint'], PHP_URL_HOST), '[]');
-        $addresses = filter_var($host, FILTER_VALIDATE_IP) ? [$host] : gethostbynamel($host);
+        $resolveStart = microtime(true);
+        $addresses = filter_var($host, FILTER_VALIDATE_IP) ? [$host] : false;
+        if ($addresses === false && function_exists('dns_get_record')) {
+            $records = @dns_get_record($host, DNS_A);
+            $addresses = $records ? array_values(array_unique(array_column($records, 'ip'))) : false;
+        }
+        if (!$addresses) $addresses = gethostbynamel($host);
         if (!$addresses) throw new \RuntimeException('dns');
         foreach ($addresses as $address) {
             if (!filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) throw new \RuntimeException('address');
         }
+        // Some shared-host cURL resolvers time out although PHP DNS succeeds. Reuse
+        // the freshly validated DNS result, retaining URL hostname, SNI and TLS checks.
+        // DNS itself can exceed this deadline on blocking system resolvers; do not
+        // claim this is a guaranteed whole-request timeout.
+        $remaining = (int)floor($this->config['timeout_seconds'] - (microtime(true) - $resolveStart));
+        if ($remaining < 1) throw new \RuntimeException('dns_timeout');
         if (function_exists('curl_init')) {
             $curl=curl_init($this->config['endpoint']);
             if ($curl===false) throw new \RuntimeException('transport');
@@ -327,13 +339,17 @@ final class AiCoach
             curl_setopt_array($curl,[
                 CURLOPT_POST=>true, CURLOPT_HTTPHEADER=>['Content-Type: application/json','Authorization: Bearer '.$this->config['api_key']],
                 CURLOPT_POSTFIELDS=>json_encode($payload,JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR),
-                CURLOPT_CONNECTTIMEOUT=>$this->config['timeout_seconds'], CURLOPT_TIMEOUT=>$this->config['timeout_seconds'],
+                CURLOPT_CONNECTTIMEOUT=>$remaining, CURLOPT_TIMEOUT=>$remaining,
                 CURLOPT_FOLLOWLOCATION=>false, CURLOPT_SSL_VERIFYPEER=>true, CURLOPT_SSL_VERIFYHOST=>2,
                 CURLOPT_WRITEFUNCTION=>static function($handle,string $chunk) use (&$body): int {
                     if (strlen($body)+strlen($chunk)>65536) return 0;
                     $body.=$chunk; return strlen($chunk);
                 },
             ]);
+            if (!filter_var($host, FILTER_VALIDATE_IP)) {
+                $port = (int)(parse_url($this->config['endpoint'], PHP_URL_PORT) ?: 443);
+                curl_setopt($curl, CURLOPT_RESOLVE, [$host.':'.$port.':'.implode(',', $addresses)]);
+            }
             try {
                 if (curl_exec($curl)===false) throw new \RuntimeException('transport');
                 return ['status'=>(int)curl_getinfo($curl,CURLINFO_RESPONSE_CODE),'body'=>$body];
