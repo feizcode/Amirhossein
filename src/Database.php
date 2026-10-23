@@ -8,7 +8,12 @@ final class Database
     public static function connect(array $config): PDO
     {
         $pdo = new PDO($config['dsn'], $config['user'] ?? null, $config['password'] ?? null, [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC, PDO::ATTR_EMULATE_PREPARES=>false]);
-        if ($pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql') { $pdo->exec("SET time_zone = '+00:00'"); }
+        if ($pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql') {
+            $pdo->exec("SET time_zone = '+00:00'");
+            // Shared hosting may default to 10s, shorter than an outbound coach request.
+            // Session-only: do not change the server-wide database timeout.
+            $pdo->exec('SET SESSION wait_timeout = 60');
+        }
         else { $pdo->exec('PRAGMA foreign_keys=ON'); }
         return $pdo;
     }
