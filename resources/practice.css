@@ -1,0 +1,50 @@
+#kashf a.ks-practice-start {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 48px;
+  max-width: 100%;
+  padding: 12px 24px;
+  margin-block: 14px;
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  vertical-align: middle;
+}
+#kashf a.ks-practice-start:focus-visible { outline: 3px solid var(--m-primary); outline-offset: 4px; }
+@media (max-width: 480px) { #kashf a.ks-practice-start { width: 100%; } }
+.ks-practice-shell { box-sizing: border-box; width: 100%; overflow-wrap: anywhere; color: #1e293b; line-height: 1.9; }
+.ks-practice-shell .m-notebook { background: #fff; border: 1px solid #dce1ec; border-radius: 20px; padding: 22px; margin: 18px 0; box-shadow: 0 4px 20px #24325308; }
+.ks-practice-shell .m-notice { background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 14px; padding: 14px; color: #312e81; }
+.ks-practice-shell .m-error { background: #fff1f2; color: #9f1239; padding: 14px; border-radius: 12px; }
+.ks-practice-shell .m-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.ks-practice-shell .m-primary, .ks-practice-shell .m-secondary { border: 1px solid #c7d2fe; border-radius: 12px; padding: 10px 16px; font: inherit; cursor: pointer; }
+.ks-practice-shell .m-primary { background: #4338ca; color: #fff; }
+.ks-practice-shell .m-secondary { background: #fff; color: #3730a3; }
+.ks-practice-shell .m-tiny { font-size: .85rem; color: #475569; }
+.ks-practice-shell input[type="text"], .ks-practice-shell select { border: 1px solid #94a3b8; border-radius: 10px; padding: 10px; background: #fff; color: #1e293b; font: inherit; }
+.ks-practice-shell h1, .ks-practice-shell h2, .ks-practice-shell h3 { line-height: 1.6; }
+.ks-practice-shell h2 { font-size: 1.2rem; }
+.ks-practice-shell summary { cursor: pointer; min-height: 44px; }
+.ks-practice-shell fieldset { min-width: 0; border: 1px solid #dce1ec; border-radius: 12px; padding: 12px; margin: 16px 0; }
+.ks-practice-shell select, .ks-practice-shell input[type="text"] { max-width: 100%; min-height: 44px; box-sizing: border-box; }
+.ks-practice-shell button, .ks-practice-link { min-height: 44px; }
+.ks-practice-shell :focus-visible { outline: 3px solid #4f46e5; outline-offset: 3px; }
+.ks-practice-link { text-decoration: none; display: inline-flex; align-items: center; padding: 6px 12px; font-size: .9rem; }
+.ks-practice-progress { height: 6px; background: #e2e5ed; border-radius: 999px; overflow: hidden; margin-bottom: 14px; }
+.ks-practice-progress > span { display: block; height: 100%; background: #4f46e5; }
+.ks-practice-option { display: flex; align-items: center; gap: 10px; padding: 12px; margin-bottom: 8px; border-radius: 12px; border: 1px solid #dce1ec; background: #fff; cursor: pointer; min-height: 44px; box-sizing: border-box; }
+.ks-practice-option:hover { background: #f8fafc; border-color: #818cf8; }
+.ks-practice-option:has(input:checked) { background: #eef2ff; border-color: #4f46e5; }
+.ks-practice-option input[type="radio"] { width: 18px; height: 18px; accent-color: #4f46e5; margin: 0; flex-shrink: 0; }
+@media (max-width: 480px) {
+  .ks-practice-shell { padding: 14px !important; }
+  .ks-practice-shell h1 { font-size: 1.4rem; }
+  .ks-practice-shell button, .ks-practice-shell input[type="text"], .ks-practice-shell select { width: 100%; box-sizing: border-box; }
+  .ks-practice-shell .m-row { flex-direction: column; align-items: stretch; gap: 8px; }
+}

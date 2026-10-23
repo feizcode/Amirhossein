@@ -48,6 +48,14 @@
       <div class="m-notice" x-show="busy" role="status">در حال خواندن دفتر…</div>
       <div class="m-error" x-show="error" x-text="error" role="alert"></div>
       <div data-notice aria-live="polite"></div>
+      {% if practicePrototypeEnabled %}
+      <section class="m-notebook" aria-label="تمرین امروز">
+        <h2>تمرین امروز · نمونهٔ آزمایشی</h2>
+        <p>تا ۴ سؤال کوتاه از مباحث خوانده‌شده، با تمرین اضافهٔ اختیاری. موضوع‌ها بر اساس سابقهٔ کتاب درسی در دفترت انتخاب می‌شوند؛ ثبت مطالعه به معنی تسلط نیست.</p>
+        <a class="m-primary ks-practice-start" href="/practice-prototype">شروع یا ادامهٔ تمرین</a>
+        <p class="m-tiny">محتوای آزمایشی؛ نیازمند تأیید انسانی. نتیجه‌ها وارد گزارش یادگیری نمی‌شوند.</p>
+      </section>
+      {% endif %}
       <div data-content></div>
       <footer class="m-footer">کشف · قدم‌های کوچک، یادگیری ماندگار</footer>
     </main>

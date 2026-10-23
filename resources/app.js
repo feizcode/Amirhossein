@@ -13,6 +13,7 @@ import '@fontsource/vazirmatn/500.css';
 import '@fontsource/vazirmatn/700.css';
 import './design.css';
 import './app.css';
+import './practice.css';
 import {startJournal} from './journal.js';
 
 const icons = {

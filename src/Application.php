@@ -47,7 +47,51 @@ final class Application
             $db->prepare('DELETE FROM login_attempts WHERE ip_key=?')->execute([$key]);$db->prepare('DELETE FROM login_attempts WHERE first_at<?')->execute([time()-86400]);session_regenerate_id(true);$_SESSION['unlocked']=true;$_SESSION['expires_at']=time()+86400*(int)($config['session_days']??7);$_SESSION['csrf']=bin2hex(random_bytes(32));$_SESSION['role']='child';return(new HttpResponse(303))->withHeader('Location','/');
         });
         $app->post('/logout',function():Response{$_SESSION=[];session_destroy();setcookie('kashf_session','',['expires'=>time()-3600,'path'=>'/','secure'=>!empty($_SERVER['HTTPS'])&&$_SERVER['HTTPS']!=='off','httponly'=>true,'samesite'=>'Lax']);return(new HttpResponse(303))->withHeader('Location','/login');});
-        $app->get('/',fn()=>$render('app.twig',['csrf'=>$_SESSION['csrf'],'assets'=>$assets]));
+        $prototypeEnabled = (bool)($config['practice_prototype_enabled'] ?? false);
+        $app->get('/',fn()=>$render('app.twig',['csrf'=>$_SESSION['csrf'],'assets'=>$assets,'practicePrototypeEnabled'=>$prototypeEnabled]));
+        $prototypePage = function(Request $q)use($root,$render,$assets,$prototypeEnabled,$learning,$db,$config):Response {
+            if (!$prototypeEnabled) return new HttpResponse(404);
+            $bank = PracticePrototype::questions($root);
+            if (empty($config['practice_allow_prototype_content'])) $bank = array_values(array_filter($bank,fn($question)=>($question['review_status'] ?? '')==='approved' && !empty($question['approved_by']) && !empty($question['approved_at'])));
+            $eligibility = PracticePrototype::eligibility($bank, $learning->state($_SESSION['role'] ?? 'child'));
+            $questions = $eligibility['questions'];
+            $practice = new Practice($db);
+            if (empty($config['practice_allow_prototype_content'])) $practice->pauseUnapproved();
+            $state = $practice->current() ?: $practice->latest();
+            if (empty($config['practice_allow_prototype_content']) && $state && !$state['finished']) $state=[];
+            if ($_SESSION['role'] === 'parent' && $q->getMethod() === 'GET' && ($q->getQueryParams()['view'] ?? '') === 'parent') {
+                return $render('practice-parent.twig',['csrf'=>$_SESSION['csrf'],'assets'=>$assets,'report'=>$practice->report(),'reviews'=>$practice->reviews()]);
+            }
+            $error = '';
+            if ($q->getMethod() === 'POST') {
+                try {
+                    $input=(array)$q->getParsedBody();
+                    $before=$practice->current();
+                    $state = $practice->act($questions, $input);
+                    $action=$input['action'] ?? '';
+                    if ($before && in_array($action,['hint','solution'],true) && hash_equals($before['token'],(string)($input['token'] ?? ''))) {
+                        $target=$before['questions'][$before['index']];
+                        $kind=$action==='hint'?'hint':'explanation';
+                        $record=$state['records'][$target['id']] ?? [];
+                        if (($record[$action] ?? false) && empty($record['coach'][$kind])) {
+                            $coach=new AiCoach($db,$config['ai_coach'] ?? []);
+                            $result=$coach->assist($target,$kind);
+                            $practice->storeAssistance($state['session_id'],$target['id'],$kind,$result);
+                            $state=$practice->current() ?: $practice->latest();
+                        }
+                    }
+                }
+                catch (\InvalidArgumentException $e) { $error = $e->getMessage(); }
+                if (!$error) return (new HttpResponse(303))->withHeader('Location','/practice-prototype');
+            }
+            $skills = array_keys($eligibility['skills']);
+            $byId = array_column($state['questions'] ?? $questions,null,'id');
+            $current = $state && !$state['finished'] ? ($state['questions'][$state['index']] ?? null) : null;
+            $groups = ['independent'=>[], 'help'=>[], 'needs'=>[]];
+            if ($state) foreach ($state['records'] as $id=>$record) $groups[PracticePrototype::outcome($record)][] = $byId[$id]['prompt'];
+            return $render('practice-prototype.twig',['csrf'=>$_SESSION['csrf'],'assets'=>$assets,'skills'=>$skills,'pathTopics'=>$eligibility['studied'],'coverage'=>$eligibility['coverage'],'skillLabels'=>$eligibility['skills'],'state'=>$state,'question'=>$current,'record'=>$current ? ($state['records'][$current['id']] ?? null) : null,'groups'=>$groups,'reviews'=>$practice->reviews(),'recommendations'=>$practice->recommendations($questions),'isParent'=>($_SESSION['role'] ?? 'child')==='parent','error'=>$error]);
+        };
+        $app->map(['GET','POST'],'/practice-prototype',$prototypePage);
         $app->get('/api/v1/state',function()use($learning,$backup):Response{$s=$learning->state($_SESSION['role']??'child');try{$backup->daily();$s['backupWarning']=false;}catch(\Throwable$e){error_log('Backup failed: '.$e->getMessage());$s['backupWarning']=true;}return self::json($s);});
         $app->post('/api/v1/context',function(Request$q)use($learning):Response{$role=$q->getParsedBody()['role']??'';if(!in_array($role,['child','parent'],true))throw new \InvalidArgumentException('بخش انتخابی معتبر نیست.');$_SESSION['role']=$role;return self::json($learning->state($role));});
         $guard=static function(string$role):void{if(($_SESSION['role']??'child')!==$role)throw new AccessDenied('این کار از بخش مربوط به خودش انجام می‌شود.');};

@@ -74,6 +74,8 @@ final class Database
         }
         try {
             Schedule::migrate($db);
+            Practice::migrate($db);
+            AiCoach::migrate($db);
         } catch (\Throwable) {
             // Ignore if DDL is not permitted for this user
         }
@@ -82,6 +84,8 @@ final class Database
     {
         foreach (self::schema($db->getAttribute(PDO::ATTR_DRIVER_NAME)==='mysql') as $sql) { $db->exec($sql); }
         Schedule::migrate($db);
+        Practice::migrate($db);
+        AiCoach::migrate($db);
         if ($db->query('SELECT COUNT(*) FROM schema_versions WHERE version=1')->fetchColumn()) {
             self::migrate($db, $catalog);
             return;

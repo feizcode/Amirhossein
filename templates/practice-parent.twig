@@ -1,0 +1,18 @@
+{% extends 'base.twig' %}
+{% block body %}
+<main class="m-main ks-practice-shell" style="max-width:850px;margin:auto;padding:24px">
+<a class="m-secondary ks-practice-link" href="/practice-prototype">بازگشت به تمرین</a><h1>گزارش تمرین والدین</h1>
+<p>این گزارش بر پایهٔ پاسخ‌های ثبت‌شده است، نه تشخیص تسلط یا درصد تکمیل منابع. سؤال‌ها هنوز محتوای آزمایشی‌اند.</p>
+<section class="m-notebook">
+<p>جلسه‌های کامل‌شده: {{ report.sessions }}</p>
+<p>پاسخ صحیح مستقل: {{ report.independent }}</p>
+<p>پاسخ صحیح پس از کمک یا تلاش مجدد: {{ report.help }}</p>
+<p>نیازمند تمرین بیشتر: {{ report.needs }}</p>
+</section>
+<h2>مرورهای باقی‌مانده</h2>
+{% for review in reviews %}<p>{{ review.topic }} · موعد: <bdi>{{ review.due_date }}</bdi></p>{% else %}<p>موردی ثبت نشده.</p>{% endfor %}
+<h2>فعالیت اخیر</h2>
+{% for item in report.recent %}<section class="m-notebook"><p><bdi>{{ item.date }}</bdi> · {{ item.status == 'completed' ? 'کامل‌شده' : 'در حال انجام' }}</p><p>مستقل: {{ item.counts.independent }} · با کمک/تلاش مجدد: {{ item.counts.help }} · تمرین بیشتر: {{ item.counts.needs }}</p></section>{% else %}<p>هنوز تمرینی ثبت نشده.</p>{% endfor %}
+<p>انتخاب بخش والدین در این برنامهٔ دارای رمز مشترک، رمز یا مجوز جداگانه‌ای ایجاد نمی‌کند.</p>
+</main>
+{% endblock %}

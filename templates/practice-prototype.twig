@@ -1,0 +1,106 @@
+{% extends 'base.twig' %}
+{% block head %}<meta name="csrf-token" content="{{ csrf }}">{% endblock %}
+{% block body %}
+<main class="m-main ks-practice-shell" style="max-width:800px;margin:auto;padding:24px">
+  {% if not state or state.finished %}
+  <section aria-label="هوش مصنوعی · نسخه بتا" class="m-notice">
+    <h2>هوش مصنوعی · نسخه بتا</h2>
+    <p>راهنمایی هوش مصنوعی ممکن است اشتباه کند. تأیید انسانی محتوا و بررسی شرایط ارائه‌دهنده هنوز انجام نشده است. راهنمایی و راه‌حل ذخیره‌شده، پاسخ هوش مصنوعی نیستند.</p>
+  </section>
+  <p class="m-notice">نمونهٔ آزمایشی · پاسخ‌ها از نظر محاسباتی بررسی شده‌اند؛ تأیید انسانی هنوز انجام نشده است. جلسه‌ها، پاسخ‌ها و راهنمایی‌های دریافت‌شده در پایگاه داده ذخیره می‌شوند و پس از خروج باقی می‌مانند.</p>
+  {% endif %}
+  <div class="m-row" style="justify-content:space-between;align-items:center;margin-bottom:16px">
+    <a href="/" class="m-secondary ks-practice-link">بازگشت به دفتر</a>
+    {% if isParent|default(false) %}<a href="/practice-prototype?view=parent" class="m-secondary ks-practice-link">گزارش تمرین والدین</a>{% endif %}
+  </div>
+  <h1>تمرین امروز</h1>
+  {% if state and not state.finished %}<p class="m-tiny">محتوای آزمایشی؛ نتیجه‌ها ذخیره می‌شوند.</p>{% endif %}
+  <details class="m-notebook"{% if not state or state.finished %} open{% endif %}><summary>بیایید دوباره تمرین کنیم</summary>
+    {% for review in reviews|default([]) %}<p>{{ review.topic }} · مرور بعدی: <bdi>{{ review.due_date }}</bdi></p>{% else %}<p>هنوز موردی برای مرور ثبت نشده است.</p>{% endfor %}
+    <p>وقتی موعد برسد و سؤال مشابه موجود باشد، مرور در ابتدای تمرین قرار می‌گیرد. دیدن راه‌حل به‌تنهایی مرور موفق نیست.</p>
+  </details>
+  {% for suggestion in recommendations|default([]) %}
+  <aside class="m-notice"><h2>یک قدم کوچک‌تر</h2>
+    <p>در {{ suggestion.topic }}، در {{ suggestion.sessions }} جلسه و {{ suggestion.encounters }} برخورد با سؤال، کمک یا تمرین دوباره لازم شده است. این تشخیص سطح یا ناتوانی نیست.</p>
+    {% if suggestion.skill %}<p>پیشنهاد: در انتخاب موضوع، «{{ suggestion.suggestion }}» را برای مرور ساده‌تر انتخاب کن.</p>{% else %}<p>پیشنهاد: پیش از تمرین بعدی، یک مثال تصویری از همین درس را همراه والدین مرور کن؛ هنوز سؤال ساده‌تر متناسب در بانک نداریم.</p>{% endif %}
+  </aside>
+  {% endfor %}
+  {% if error %}<p role="alert" class="m-error">{{ error }}</p>{% endif %}
+  {% if not state or state.finished %}
+    {% if state %}
+    <section class="m-notebook" aria-labelledby="summary-title">
+      <h2 id="summary-title">آفرین به تلاش تو! خلاصهٔ تمرین</h2>
+      {% for key, label in {independent:'مستقل حل کردم', help:'با کمک یا تلاش دوباره حل کردم', needs:'بیایید دوباره تمرین کنیم'} %}
+      <h3>{{ label }}</h3><ul>{% for prompt in groups[key] %}<li>{{ prompt }}</li>{% else %}<li>موردی ثبت نشده.</li>{% endfor %}</ul>
+      {% endfor %}
+      <p>سؤال چالشِ ردشده در این گروه‌ها شمرده نمی‌شود. اشتباه‌ها و پاسخ‌های همراه کمک برای مرور با سؤال مشابه ذخیره می‌شوند.</p>
+    </section>
+    {% endif %}
+    <section class="m-notebook">
+      <h2>برای امروز چه چیزی را تمرین کنیم؟</h2>
+      <p>موضوع‌های زیر از سابقهٔ مطالعه یا تکمیلِ کتاب درسی ریاضی در دفترت انتخاب شده‌اند؛ ثبت مطالعه به معنی تسلط نیست. اولین پیشنهاد، تازه‌ترین مبحث ثبت‌شده‌ای است که این نمونه برایش سؤال دارد.</p>
+      {% if pathTopics|default([]) %}
+      <details><summary>پوشش سؤال‌ها برای مسیر ثبت‌شده</summary>
+        <ul>{% for item in coverage|default([]) %}<li>{{ item.topic }}: {% if item.count %}{{ item.count }} سؤال آزمایشی{% else %}هنوز سؤال نداریم{% endif %}</li>{% endfor %}</ul>
+      </details>
+      {% else %}<p class="m-notice">در این نسخه هنوز سابقه‌ای برای کتاب درسی ریاضی پیدا نشد. اگر سابقه‌ات در نسخهٔ آنلاین است، این نمونه به اطلاعات آن سرور دسترسی ندارد. شمارهٔ درس را حدس نمی‌زنیم.</p>{% endif %}
+      {% if skills %}
+      <form method="post">
+        <input type="hidden" name="_csrf" value="{{ csrf }}"><input type="hidden" name="action" value="start">
+        <label for="skill">موضوع</label>
+        <select id="skill" name="skill" required>
+          {% set labels = {fraction_addition:'جمع کسرها', fraction_of_quantity:'کسر یک مقدار', growing_differences:'الگوها', rectangle_perimeter:'محیط شکل‌ها', unordered_pairs:'شمارش منطقی'} %}
+          {% for skill in skills %}<option value="{{ skill }}">{{ skillLabels[skill]|default(labels[skill]|default(skill)) }}{% set skillNames = {fraction_addition:'جمع سادهٔ کسر',mixed_addition:'جمع عدد مخلوط',mixed_subtraction:'تفریق عدد مخلوط',fraction_product:'ضرب دو کسر',fraction_of_quantity:'کسر یک مقدار',mixed_product:'ضرب عدد مخلوط',compound_time:'جمع و تفریق زمان',compound_elapsed:'زمان سپری‌شده',place_value:'ارزش مکانی',place_compare:'مقایسه و اختلاف عددها'} %}{% if skillNames[skill] is defined %} · {{ skillNames[skill] }}{% endif %}</option>{% endfor %}
+        </select>
+        <fieldset><legend>چقدر وقت داری؟</legend>
+          <label><input type="radio" name="duration" value="5" checked> ۵ دقیقه · تا ۳ سؤال، شامل تمرین اضافهٔ اختیاری</label>
+          <label><input type="radio" name="duration" value="15"> ۱۰ تا ۱۵ دقیقه · تا ۴ سؤال، شامل تمرین اضافهٔ اختیاری</label>
+        </fieldset>
+        <p>اگر مرور سررسیدشده و سؤال مشابه موجود باشد، تمرین با مرور شروع می‌شود؛ سپس از موضوع انتخابی سؤال می‌بینی و فقط در صورت وجود سؤال از مباحث خوانده‌شدهٔ دیگر، تمرین بیشتری اضافه می‌شود. تعداد سؤال ممکن است کمتر از زمان انتخابی باشد.</p>
+        <button class="m-primary" type="submit">شروع تمرین آزمایشی</button>
+      </form>
+      {% else %}
+      <p class="m-notice">برای مباحث ثبت‌شده فعلاً سؤال متناسب در این بانک کوچک نداریم. فعالیت درس خوانده‌شده را در دفتر ثبت کن؛ اگر قبلاً ثبت شده، بانک سؤال باید برای همان مبحث گسترش پیدا کند. سؤال درس‌های جلوتر را جایگزین نمی‌کنیم.</p>
+      {% endif %}
+    </section>
+  {% else %}
+    <section class="m-notebook ks-practice-question">
+      <div class="ks-practice-progress" role="progressbar" aria-label="پیشرفت جلسه" aria-valuemin="0" aria-valuemax="{{ state.ids|length }}" aria-valuenow="{{ state.index }}"><span style="width:{{ state.index / state.ids|length * 100 }}%"></span></div>
+      <p>سؤال {{ state.index + 1 }} از {{ state.ids|length }}{% if question.id == state.optional_id|default(null) %} · تمرین اضافهٔ اختیاری{% endif %}</p>
+      <h2>{{ question.topic }}</h2>
+      <p style="font-size:1.25rem;line-height:2">{{ question.prompt }}</p>
+      <form method="post">
+        <input type="hidden" name="_csrf" value="{{ csrf }}"><input type="hidden" name="token" value="{{ state.token }}">
+        {% if not record or not record.done %}
+          {% if question.format == 'multiple_choice' %}
+          <fieldset><legend>پاسخت را انتخاب کن</legend>
+            {% for option in question.options %}<label class="ks-practice-option"><input type="radio" name="answer" value="{{ option.id }}"> {{ option.text }}</label>{% endfor %}
+          </fieldset>
+          {% else %}<label for="answer">پاسخ عددی</label><input id="answer" name="answer" type="text" inputmode="decimal" maxlength="80" autocomplete="off">{% endif %}
+          <div class="m-row" style="flex-wrap:wrap;margin-top:16px">
+            <button class="m-primary" name="action" value="answer">ثبت پاسخ</button>
+            <button class="m-secondary" name="action" value="unknown">هنوز نمی‌دانم</button>
+            <button class="m-secondary" name="action" value="hint">یک راهنمایی کوتاه</button>
+          </div>
+        {% endif %}
+        <div role="status" aria-live="polite">
+          {% if record %}
+            {% if record.correct %}<p>درست حل کردی!{% if record.hint or record.attempts|length > 1 %} کمک گرفتن و دوباره تلاش کردن بخشی از یادگیری است.{% endif %}</p>
+            {% elseif record.attempts %}<p>هنوز به پاسخ نرسیدیم؛ می‌توانی راهنمایی بگیری و دوباره امتحان کنی.</p>{% endif %}
+            {% if record.hint %}<p class="m-notice">{{ record.coach.hint.source|default('stored') == 'ai' ? 'راهنمایی هوش مصنوعی · نسخه بتا' : 'راهنمایی ذخیره‌شده (نه هوش مصنوعی)' }}: {{ record.coach.hint.text|default(question.hint) }}</p>{% endif %}
+            {% if record.solution %}<p class="m-notice">{{ record.coach.explanation.source|default('stored') == 'ai' ? 'توضیح هوش مصنوعی · نسخه بتا' : 'راه‌حل ذخیره‌شده (نه هوش مصنوعی)' }}: {{ record.coach.explanation.text|default(question.solution) }}</p><p>دیدن راه‌حل به‌تنهایی به معنای یادگیری مستقل نیست.</p>{% endif %}
+          {% endif %}
+        </div>
+        {% if record and record.done %}
+          {% if not record.solution %}<button name="action" value="solution" class="m-secondary">دیدن راه‌حل</button>{% endif %}
+          <button name="action" value="next" class="m-primary">{{ state.index == state.ids|length - 1 ? 'دیدن خلاصه' : 'سؤال بعدی' }}</button>
+        {% elseif record and record.attempts %}
+          <button name="action" value="solution" class="m-secondary">دیدن راه‌حل و پایان این سؤال</button>
+        {% endif %}
+        {% if question.id == state.optional_id|default(null) and (not record or not record.attempts) %}<button name="action" value="skip" class="m-secondary">این بار چالش را رد می‌کنم</button>{% endif %}
+      </form>
+      <p class="m-tiny">می‌توانی به دفتر برگردی یا از حساب خارج شوی؛ تمرین نیمه‌تمام برای ادامه ذخیره می‌ماند.</p>
+    </section>
+  {% endif %}
+</main>
+{% endblock %}

@@ -5,5 +5,7 @@
 /storage/*
 !/storage/.gitkeep
 /config/local.php
+/config/local.php.tmp
+/config/apis.txt
 /public/assets/build/
 /.env

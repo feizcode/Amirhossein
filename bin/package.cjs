@@ -6,7 +6,7 @@ function copy(from,to){fs.mkdirSync(path.dirname(to),{recursive:true});fs.cpSync
 const privateRoot=path.join(deploy,'amir-app'),publicRoot=path.join(deploy,'public_html/amir');
 for(const part of['src','vendor','templates','database','composer.json','composer.lock'])copy(path.join(root,part),path.join(privateRoot,part));
 copy(path.join(root,'config/example.php'),path.join(privateRoot,'config/example.php'));
-for(const file of['restore.php','backup-to-sql.php','configure.php'])copy(path.join(root,'bin',file),path.join(privateRoot,'bin',file));
+for(const file of['restore.php','backup-to-sql.php','configure.php','migrate.php','ai-status.php','openrouter-free-models.php','openrouter-smoke.php'])copy(path.join(root,'bin',file),path.join(privateRoot,'bin',file));
 copy(path.join(root,'public/assets/build/.vite/manifest.json'),path.join(privateRoot,'resources/manifest.json'));
 for(const dir of['sessions','backups','logs','cache'])fs.mkdirSync(path.join(privateRoot,'storage',dir),{recursive:true});
 for(const file of['index.php','.htaccess','favicon.svg'])copy(path.join(root,'public',file),path.join(publicRoot,file));
@@ -18,5 +18,5 @@ for(const file of['index.php','router.php','.htaccess','favicon.svg'])copy(path.
 fs.mkdirSync(path.join(source,'storage'),{recursive:true});fs.writeFileSync(path.join(source,'storage/.gitkeep'),'');
 const php=process.env.PHP_BIN||(fs.existsSync(path.join(root,'work/tools/php/php.exe'))?path.join(root,'work/tools/php/php.exe'):'php'),artifacts=[];
 for(const[name,dir]of[['kashf-deploy',deploy],['kashf-source',source]]){const file=path.join(out,name+'-'+stamp+'.zip');execFileSync(php,[path.join(root,'bin/zip.php'),dir,file],{stdio:'inherit'});artifacts.push({file:path.basename(file),bytes:fs.statSync(file).size,sha256:crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex')});}
-fs.writeFileSync(path.join(out,'release-manifest.json'),JSON.stringify({version:'1.0.0',built_at:new Date().toISOString(),deployed:false,artifacts},null,2));
+fs.writeFileSync(path.join(out,'release-manifest.json'),JSON.stringify({version:'1.0.0',release_status:'pilot-candidate',built_at:new Date().toISOString(),deployed:false,validation:{human_content_approval:false,live_ai_quality_approved:false,mariadb_host_validation:false,one_week_pilot:false},artifacts},null,2));
 console.log(JSON.stringify(artifacts,null,2));
